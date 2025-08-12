@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img class="name" src="headingpic.jpg">
+    <!-- Background music -->
+    <audio id="bg-music" src="music.mp3" autoplay loop></audio>
+    <!-- Replace 'music.mp3' with your chosen MP3 file -->
+
+    <div class="overlay"></div>
+    
+    <div class="chat-container">
+        <div id="messages"></div>
+        <div id="reveal" class="hidden">
+            <button onclick="showFinalMessage()">💌 Click to Reveal 💌</button>
+        </div>
+        <div id="final-message" class="hidden">
+            <h2>You have my heart — always ❤️</h2>
+        </div>
+        <div id="messages"></div>
+<button id="nextBtn">Next ➡️</button>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
