@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: url('herpicture.jpg') no-repeat center center/cover; 
+    background: url('picture1.jpg') no-repeat center center/cover; 
     /* Replace 'placeholder.jpg' with her photo */
     height: 100vh;
     display: flex;
@@ -141,3 +141,4 @@ body {
     position: absolute;
     top: 5%
 }
+
