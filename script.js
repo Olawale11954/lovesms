@@ -1,55 +1,77 @@
 let messages = [];
+    let compliments = [];
+    let currentMessageIndex = 0;
+    let currentComplimentIndex = 0;
 
-fetch('messages.txt')
-  .then(response => response.text())
-  .then(data => {
-    messages = data.split('\n').map(line => {
-      return line.trim() === "Click here ❤️" 
-        ? { text: line.trim(), side: "left", isHeart: true }
-        : { text: line.trim(), side: "left" };
-    });
-  })
-  .catch(error => console.error('Error loading messages:', error));
+    // Load messages.txt
+    fetch('messages.txt')
+      .then(response => response.text())
+      .then(data => {
+        messages = data.trim().split('\n').filter(line => line.trim() !== '');
+        displayMessage();
+      });
 
+    // Load compliments.txt
+    fetch('compliments.txt')
+      .then(response => response.text())
+      .then(data => {
+        compliments = data.trim().split('\n').filter(line => line.trim() !== '');
+        displayCompliment();
+      });
 
+    function displayMessage() {
+      const messageElement = document.getElementById('message');
+      messageElement.classList.remove('fade-in');
+      void messageElement.offsetWidth; // restart animation
+      if (messages.length > 0) {
+        messageElement.textContent = messages[currentMessageIndex];
+      } else {
+        messageElement.textContent = "No messages available.";
+      }
+      messageElement.classList.add('fade-in');
+    }
 
-let index = 0;
+    function displayCompliment() {
+      const complimentElement = document.getElementById('compliment');
+      complimentElement.classList.remove('fade-in');
+      void complimentElement.offsetWidth; // restart animation
+      if (compliments.length > 0) {
+        complimentElement.textContent = compliments[currentComplimentIndex];
+        triggerHeartAnimation();
+      } else {
+        complimentElement.textContent = "No compliments available.";
+      }
+      complimentElement.classList.add('fade-in');
+    }
 
-function showMessage() {
-    if (index >= messages.length) return;
+    function nextMessage() {
+      currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+      displayMessage();
+    }
 
-    const msgData = messages[index];
-    const msg = document.createElement("div");
-    msg.classList.add("message", msgData.side);
+    function nextCompliment() {
+      currentComplimentIndex = (currentComplimentIndex + 1) % compliments.length;
+      displayCompliment();
+    }
 
-    msg.innerHTML = `<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>`;
-    document.getElementById("messages").appendChild(msg);
-
-    const typingTime = Math.max(1000, msgData.text.length * 80);
-
+    function triggerHeartAnimation() {
+  for (let i = 0; i < 5; i++) { // more hearts each time
     setTimeout(() => {
-        msg.innerHTML = msgData.text;
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
 
-        if (msgData.isHeart) {
-            msg.classList.add("clickable-heart");
-            msg.addEventListener("click", () => {
-                msg.innerHTML = "You are always on my mind ❤️";
-                msg.style.fontWeight = "bold";
-                msg.style.fontSize = "1.3em";
-                msg.classList.remove("clickable-heart");
-            });
-            document.getElementById("nextBtn").style.display = "none"; // hide button at the end
-        }
+      const heartIcon = document.createElement('span');
+      heartIcon.textContent = '❤️';
 
-    }, typingTime);
+      heart.appendChild(heartIcon);
+      document.body.appendChild(heart);
 
-    index++;
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }, i * 200);
+  }
 }
-
-// Event listener for Next button
-document.getElementById("nextBtn").addEventListener("click", showMessage);
-
-// Show the first message on page load
-window.onload = showMessage;
-
-
