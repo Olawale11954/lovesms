@@ -33,7 +33,7 @@ function showMessage() {
         if (msgData.isHeart) {
             msg.classList.add("clickable-heart");
             msg.addEventListener("click", () => {
-                msg.innerHTML = "You’ve captured my heart completely ❤️";
+                msg.innerHTML = "You are always on my mind ❤️";
                 msg.style.fontWeight = "bold";
                 msg.style.fontSize = "1.3em";
                 msg.classList.remove("clickable-heart");
@@ -51,4 +51,5 @@ document.getElementById("nextBtn").addEventListener("click", showMessage);
 
 // Show the first message on page load
 window.onload = showMessage;
+
 
