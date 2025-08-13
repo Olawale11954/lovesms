@@ -4,7 +4,7 @@ fetch('messages.txt')
   .then(response => response.text())
   .then(data => {
     messages = data.split('\n').map(line => {
-      return line.trim() === "❤️" 
+      return line.trim() === "Click here ❤️" 
         ? { text: line.trim(), side: "left", isHeart: true }
         : { text: line.trim(), side: "left" };
     });
@@ -51,3 +51,4 @@ document.getElementById("nextBtn").addEventListener("click", showMessage);
 
 // Show the first message on page load
 window.onload = showMessage;
+
