@@ -53,25 +53,34 @@ let messages = [];
       currentComplimentIndex = (currentComplimentIndex + 1) % compliments.length;
       displayCompliment();
     }
+// Slideshow
+let slideIndex = 0;
+showSlides();
 
-    function triggerHeartAnimation() {
-  for (let i = 0; i < 5; i++) { // more hearts each time
-    setTimeout(() => {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-
-      const heartIcon = document.createElement('span');
-      heartIcon.textContent = '❤️';
-
-      heart.appendChild(heartIcon);
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }, i * 200);
-  }
+function showSlides() {
+    let slides = document.getElementsByClassName("slide");
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) { slideIndex = 1 }
+    slides[slideIndex - 1].style.display = "block";
+    setTimeout(showSlides, 4000); // Change every 4 seconds
 }
+
+// Floating hearts
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 300);
+
+
+    
+
